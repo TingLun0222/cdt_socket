@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Example</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div id="message-container"></div>
+    <form id="message-form">
+        <input type="text" id="receiver-input" placeholder="Receiver ID">
+        <input type="text" id="content-input" placeholder="Content">
+        <input type="text" id="sender-input" placeholder="Sender">
+        <input type="text" id="password-input" placeholder="Password">
+        <button type="submit">Send</button>
+    </form>
+    <script>
+        var messageForm = document.getElementById("message-form");
+        messageForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            var receiverInput = document.getElementById("receiver-input");
+            var contentInput = document.getElementById("content-input");
+            var senderInput = document.getElementById("sender-input");
+            var passwordInput = document.getElementById("password-input");
+            var data = { "receiver": receiverInput.value, "content": contentInput.value, "sender": senderInput.value, "password": passwordInput.value };
+            ws.send(JSON.stringify(data));
+            //messageInput.value = "";
+        });
+        var ws = new WebSocket("wss://" + "test.9-thirty.com.tw"  + "/ws");
+        ws.onmessage = function(event) {
+            var message = event.data;
+            var p = document.createElement("p");
+            p.textContent = message;
+            document.body.appendChild(p);
+
+        };
+
+    </script>
+</body>
+</html>
+
